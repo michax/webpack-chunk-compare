@@ -47,6 +47,8 @@ console.time('Loaded b ('+config.bPath+')');
 var bJson = JSON.parse(fs.readFileSync(config.bPath));
 console.timeEnd('Loaded b ('+config.bPath+')');
 
+console.log('\n');
+
 // Process children and print differences for all matching modules
 
 processChildren(aJson, bJson, config);

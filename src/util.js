@@ -7,23 +7,21 @@ function printDifference(a, b, aName = 'a', bName = 'b', verbose = false) {
     var bAdditions = _.difference(bNames, aNames);
     var aAdditions = _.difference(aNames, bNames);
 
-    console.log('');
     console.log('What "'+bName+'" have that "'+aName+'" doesn\'t');
     console.log('--------------');
     console.log(bAdditions);
-    console.log('');
+    console.log('\n');
 
     console.log('What "'+aName+'" have that "'+bName+'" doesn\'t.');
     console.log('--------------');
     console.log(aAdditions);
-    console.log('');
+    console.log('\n');
 
     if (verbose) {
         console.log('Details of what "'+aName+'" have that "'+bName+'" doesn\'t');
         console.log('--------------');
         var details = _.map(bAdditions, (name) => _.find(b, {name: name}));
         console.log(details);    
-        console.log('');
     }
 }
 
@@ -31,7 +29,7 @@ function chunkReport(aChunk, bChunk, title = 'App', aName = 'a', bName = 'b', ve
     console.log('--------------------');
     console.log('-- ', title);
     console.log('--------------------');
-    console.log('');
+    console.log('\n');
 
     printDifference(aChunk.modules, bChunk.modules, aName, bName, verbose);
 }
