@@ -83,3 +83,5 @@ Optionaly for more information use:
 * **--a-name:** Set name to be used for 'a' changes.
 * **--a-name:** Set name to be used for 'b' changes.
 * **--verbose:** Print more details (including module details)
+* **--child-index:** Show only child with given index. By default all children are processed.
+* **--lose-matching:** Looselly match children, instead of exact entrypoints matching. Usefull when we know that children project chunk definition changed. By default exact entrypoints matching is used.
