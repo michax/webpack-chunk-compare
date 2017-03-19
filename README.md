@@ -64,6 +64,7 @@ Make sure that at least below options are set to true:
   chunkModules: true,
   // Add built modules information
   modules: true,
+  children: true
 }
 ```
 

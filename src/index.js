@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-var { printDifference, chunkReport } = require('./util');
+var processChildren = require('./util').processChildren;
 var _ = require('lodash');
 var fs = require('fs');
 var minimist = require('minimist');
@@ -14,6 +14,8 @@ if (argv['_'].length < 2) {
     return;
 }
 
+// Arguments processing
+
 var config = {
     aPath: argv['_'][0],
     bPath: argv['_'][1],
@@ -21,6 +23,8 @@ var config = {
     aName: argv['a-name'] || 'a',
     bName: argv['b-name'] || 'b',
     chunkName: argv['chunk-name'] || null,
+    loseMatching: argv['lose-matching'] || false,
+    childIndex: argv['child-index'],
 }
 
 if (!fs.existsSync(config.aPath)) {    
@@ -33,6 +37,8 @@ if (!fs.existsSync(config.bPath)) {
     return;
 }
 
+// Load json files
+
 console.time('Loaded a ('+config.aPath+')');
 var aJson = JSON.parse(fs.readFileSync(config.aPath));
 console.timeEnd('Loaded a ('+config.aPath+')');
@@ -41,31 +47,8 @@ console.time('Loaded b ('+config.bPath+')');
 var bJson = JSON.parse(fs.readFileSync(config.bPath));
 console.timeEnd('Loaded b ('+config.bPath+')');
 
-var bChild = bJson.children[0];
-var aChild = aJson.children[0];
+// Process children and print differences for all matching modules
 
-console.log('');
-
-for(var i = 0; i < bChild.chunks.length; i++) {
-    var bNames = bChild.chunks[i].names;
-    var bName = _.first(bNames);
-    var bChunk = bChild.chunks[i];
-
-    if (config.chunkName && _.lowerCase(bName) !== _.lowerCase(config.chunkName)) {
-        continue;
-    }
-
-    var aChunkIndex = _.findIndex(aChild.chunks, (item) => {
-        return _.isEqual(item.names, bNames);
-    });
-
-    if (aChunkIndex == -1) {
-        continue;
-    }
-
-    var aChunk = aChild.chunks[aChunkIndex];
-    var title = _.capitalize(bName);
-    chunkReport(aChunk, bChunk, title, config.aName, config.bName, config.verbose);
-}
+processChildren(aJson, bJson, config);
 
 console.timeEnd('Completed in: ');
