@@ -29,6 +29,7 @@ wscmp path/to/a/a.json path/to/a/b.json
 What "b" have that "a" doesn't
 --------------
 [ './special-lib.js' ]
+
 What "a" have that "b" doesn't.
 --------------
 []
