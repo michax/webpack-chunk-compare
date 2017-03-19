@@ -16,7 +16,7 @@ npm install -g webpack-chunk-compare
 # Use me!
 
 ```
-wscmp path/to/a/a.json path/to/a/b.json
+wcmp path/to/a/a.json path/to/a/b.json
 ```
 
 # What you get
