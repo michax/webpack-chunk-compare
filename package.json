@@ -1,0 +1,24 @@
+{
+  "name": "webpack-chunk-compare",
+  "version": "0.0.1",
+  "keywords": ["webpack", "chunk", "compare", "diff", "modules"],
+  "description": "Uber simple util for comparing chunk modules from webpack stat json. Usage: wcmp a.json b.json",
+  "main": "src/index.js",
+  "scripts": {},  
+  "author": "Michal Kulinski",
+  "license": "MIT",
+  "os": [
+    "linux",
+    "win32"
+  ],
+  "engines": {
+    "node": ">=6.1.3"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "minimist": "^1.2.0"
+  },
+  "bin": {
+    "wcmp": "src/index.js"
+  }
+}
