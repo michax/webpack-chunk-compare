@@ -58,8 +58,6 @@ function processChild(aChild, bChild, config) {
     }
 }
 
-// Process children
-
 function processChildren(aJson, bJson, config) {
     for(var c = 0; c < bJson.children.length; c++) {
         if (!_.isNil(config.childIndex) && c !== config.childIndex) {
