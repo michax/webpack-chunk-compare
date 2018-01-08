@@ -59,46 +59,40 @@ function processChild(aChild, bChild, config) {
 }
 
 function normalizeLegacy(aJson, bJson) {
+    const out = {
+        aJson,
+        bJson,
+    };
+
     if (
         (!bJson.children || bJson.children.length === 0) &&
-        (bJson.chunks && bJson.chunks.length > 0) &&
-        (aJson.children && aJson.children.length) === 1
+        (bJson.chunks && bJson.chunks.length > 0)
     ) {
-        return {
-            aJson,
-            bJson: {
-                children: [
-                    {
-                        chunks: bJson.chunks,
-                        entrypoints: bJson.entrypoints,
-                    },
-                ]
-            },
+        out.bJson = {
+            children: [
+                {
+                    chunks: bJson.chunks,
+                    entrypoints: bJson.entrypoints,
+                },
+            ]
         };
     }
 
     if (
         (!aJson.children || aJson.children.length === 0) &&
-        (aJson.chunks && aJson.chunks.length > 0) &&
-        (bJson.children && bJson.children.length) === 1
+        (aJson.chunks && aJson.chunks.length > 0)
     ) {
-        return {
-            aJson: {
-                children: [
-                    {
-                        chunks: aJson.chunks,
-                        entrypoints: aJson.entrypoints,
-                    },
-                ]
-            },
-            bJson,
+        out.aJson = {
+            children: [
+                {
+                    chunks: aJson.chunks,
+                    entrypoints: aJson.entrypoints,
+                },
+            ]
         };
     }
 
-    return {
-        aJson,
-        bJson,
-    };
+    return out;
 }
 
 function processChildren(aJsonData, bJsonData, config) {
