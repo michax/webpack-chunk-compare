@@ -48,7 +48,7 @@ function processChild(aChild, bChild, config) {
             return _.isEqual(item.names, bNames);
         });
 
-        if (aChunkIndex == -1) {
+        if (aChunkIndex === -1) {
             continue;
         }
 
@@ -58,17 +58,65 @@ function processChild(aChild, bChild, config) {
     }
 }
 
-function processChildren(aJson, bJson, config) {
-    for(var c = 0; c < bJson.children.length; c++) {
-        if (!_.isNil(config.childIndex) && c !== config.childIndex) {
+function normalizeLegacy(aJson, bJson) {
+    if (
+        (!bJson.children || bJson.children.length === 0) &&
+        (bJson.chunks && bJson.chunks.length > 0) &&
+        (aJson.children && aJson.children.length) === 1
+    ) {
+        return {
+            aJson,
+            bJson: {
+                children: [
+                    {
+                        chunks: bJson.chunks,
+                        entrypoints: bJson.entrypoints,
+                    },
+                ]
+            },
+        };
+    }
+
+    if (
+        (!aJson.children || aJson.children.length === 0) &&
+        (aJson.chunks && aJson.chunks.length > 0) &&
+        (bJson.children && bJson.children.length) === 1
+    ) {
+        return {
+            aJson: {
+                children: [
+                    {
+                        chunks: aJson.chunks,
+                        entrypoints: aJson.entrypoints,
+                    },
+                ]
+            },
+            bJson,
+        };
+    }
+
+    return {
+        aJson,
+        bJson,
+    };
+}
+
+function processChildren(aJsonData, bJsonData, config) {
+    const {
+        aJson,
+        bJson,
+    } = normalizeLegacy(aJsonData, bJsonData);
+
+    for(var i = 0; i < bJson.children.length; i++) {
+        if (!_.isNil(config.childIndex) && i !== config.childIndex) {
             continue;
         }
 
-        var bChild = bJson.children[c];
+        var bChild = bJson.children[i];
         var entrypoints = bChild.entrypoints;
         
         if (config.loseMatching) {
-            aChildIndex = c;
+            aChildIndex = i;
         } else {
             aChildIndex = _.findIndex(aJson.children, (aItem) => {
                 return _.isEqual(aItem.entrypoints, bChild.entrypoints);
