@@ -1,28 +1,30 @@
 var _ = require('lodash');
 
+/**
+ * Identifier separator
+ * @type {RegExp}
+ */
+const separator = /\?\?ref--0!|\s/;
+
 function printDifference(a, b, aName = 'a', bName = 'b', verbose = false) {    
-    var aNames = _.map(a, 'name');
-    var bNames = _.map(b, 'name');
+    var aNames = _.map(a, 'identifier');
+    var bNames = _.map(b, 'identifier');
+
+    var aCombined = aNames.join(' ')
+    var bCombined = bNames.join(' ')
 
     var bAdditions = _.difference(bNames, aNames);
     var aAdditions = _.difference(aNames, bNames);
 
     console.log('What "'+bName+'" have that "'+aName+'" doesn\'t');
     console.log('--------------');
-    console.log(bAdditions);
+    console.log(_.difference(bCombined.split(separator), aCombined.split(separator)));
     console.log('\n');
 
     console.log('What "'+aName+'" have that "'+bName+'" doesn\'t.');
     console.log('--------------');
-    console.log(aAdditions);
+    console.log(_.difference(aCombined.split(separator), bCombined.split(separator)));
     console.log('\n');
-
-    if (verbose) {
-        console.log('Details of what "'+aName+'" have that "'+bName+'" doesn\'t');
-        console.log('--------------');
-        var details = _.map(bAdditions, (name) => _.find(b, {name: name}));
-        console.log(details);    
-    }
 }
 
 function chunkReport(aChunk, bChunk, title = 'App', aName = 'a', bName = 'b', verbose = false) {
