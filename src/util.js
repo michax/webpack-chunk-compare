@@ -16,14 +16,32 @@ function printDifference(a, b, aName = 'a', bName = 'b', verbose = false) {
     var bAdditions = _.difference(bNames, aNames);
     var aAdditions = _.difference(aNames, bNames);
 
+    var bDiff = _.difference(bCombined.split(separator), aCombined.split(separator));
+    bDiff = _.map(bDiff, (data) => {
+        const linked = _.find(b, (i) => i.identifier.indexOf(data) !== -1);
+        if (linked) {
+            return { import: data, issuer: linked.issuerName, size: linked.size };
+        }
+        return data;
+    });
+
     console.log('What "'+bName+'" have that "'+aName+'" doesn\'t');
     console.log('--------------');
-    console.log(_.difference(bCombined.split(separator), aCombined.split(separator)));
+    console.log(JSON.stringify(bDiff, null, 4));
     console.log('\n');
+
+    var aDiff = _.difference(aCombined.split(separator), bCombined.split(separator));
+    aDiff = _.map(aDiff, (data) => {
+        const linked = _.find(a, (i) => i.identifier.indexOf(data) !== -1);
+        if (linked) {
+            return { import: data, issuer: linked.issuerName, size: linked.size };
+        }
+        return data;
+    });
 
     console.log('What "'+aName+'" have that "'+bName+'" doesn\'t.');
     console.log('--------------');
-    console.log(_.difference(aCombined.split(separator), bCombined.split(separator)));
+    console.log(JSON.stringify(aDiff, null, 4));
     console.log('\n');
 }
 

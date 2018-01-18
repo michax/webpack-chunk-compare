@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+//noinspection JSDeprecatedSymbols
 
 var processChildren = require('./util').processChildren;
 var _ = require('lodash');
