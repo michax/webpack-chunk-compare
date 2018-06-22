@@ -13,10 +13,6 @@
   "scripts": {},
   "author": "Michal Kulinski",
   "license": "MIT",
-  "os": [
-    "linux",
-    "win32"
-  ],
   "engines": {
     "node": ">=6.1.3"
   },
