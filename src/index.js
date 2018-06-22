@@ -28,13 +28,13 @@ var config = {
     childIndex: argv['child-index'],
 }
 
-if (!fs.existsSync(config.aPath)) {    
-    console.error('Path \'a\' doesn\'t exists: ', config.aPath);    
+if (!fs.existsSync(config.aPath)) {
+    console.error('Path \'a\' doesn\'t exists: ', config.aPath);
     return;
 }
 
 if (!fs.existsSync(config.bPath)) {
-    console.error('Path \'b\' doesn\'t exists: ', config.aPath);    
+    console.error('Path \'b\' doesn\'t exists: ', config.aPath);
     return;
 }
 
