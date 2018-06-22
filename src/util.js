@@ -6,7 +6,7 @@ var _ = require('lodash');
  */
 const separator = /\?\?ref--0!|\s/;
 
-function printDifference(a, b, aName = 'a', bName = 'b', verbose = false) {    
+function printDifference(a, b, aName = 'a', bName = 'b', verbose = false) {
     var aNames = _.map(a, 'identifier');
     var bNames = _.map(b, 'identifier');
 
@@ -128,7 +128,7 @@ function processChildren(aJsonData, bJsonData, config) {
 
         var bChild = bJson.children[i];
         var entrypoints = bChild.entrypoints;
-        
+
         if (config.loseMatching) {
             aChildIndex = i;
         } else {
